@@ -8,7 +8,7 @@ import {
   BlackList, FriendInvitation, Group, Message, User,
 } from './connectors';
 import { pubsub } from '../subscriptions';
-import { messageLogic } from './logic';
+import { messageLogic, changeUserNameLogic } from './logic';
 
 import configurationManager from '../configurationManager';
 
@@ -53,6 +53,9 @@ export const resolvers = {
         return message;
       });
     },
+    async changeUserName(_, args, ctx) {
+      return changeUserNameLogic.changeUserName(_, args, ctx).then(data => data);
+     },
     async createGroup(
       _,
       {

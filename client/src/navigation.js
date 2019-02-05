@@ -22,6 +22,7 @@ import NewGroup from './screens/new-group.screen';
 import FinalizeGroup from './screens/finalize-group.screen';
 import GroupDetails from './screens/group-details.screen';
 import SigninScreen from './screens/signin.screen';
+import Settings from './screens/settings.screen';
 
 import { friendRoutes } from './screens/friends.screen';
 
@@ -41,11 +42,6 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
 });
-const TestScreen = title => () => (
-  <View style={styles.container}>
-    <Text>{title}</Text>
-  </View>
-);
 
 const FriendsSwitchNavigator = createSwitchNavigator(R.map(({ Screen }) => Screen, friendRoutes));
 
@@ -64,7 +60,7 @@ const MainScreenNavigator = createMaterialTopTabNavigator(
         return { title: friendRoutes[routes[index].key].title };
       },
     },
-    Settings: { screen: TestScreen('Settings') },
+    Settings: { screen: Settings },
   },
   {
     initialRouteName: 'Chats',

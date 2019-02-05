@@ -113,7 +113,7 @@ export const typeDefs = gql`
   type Mutation {
     # send a message to a group
     createMessage(message: CreateMessageInput!): Message
-
+    changeUserName(id: Int!, username: String!): User
     # group CRUD
     createGroup(group: CreateGroupInput!): Group
     deleteGroup(id: Int!): Group
