@@ -14,7 +14,7 @@ const mapStateToProps = ({ auth }) => ({
 
 const FriendInvitationFromMeContainer = (props) => {
   const { auth } = props;
-  console.log(props);
+
   return (
     <Query query={FRIEND_INVITATION_QUERY} variables={{ userId: auth.id }}>
       {({ data }) => (

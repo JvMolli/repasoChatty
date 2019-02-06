@@ -1,5 +1,6 @@
 import { graphql, compose } from 'react-apollo';
 import { USER_QUERY } from 'chatty/src/graphql/user.query';
+import { GROUP_QUERY } from 'chatty/src/graphql/group.query';
 import { connect } from 'react-redux';
 import { withLoading } from 'chatty/src/components/withLoading';
 import CHANGE_USERNAME from '../../../graphql/change-username.mutation';

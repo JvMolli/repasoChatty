@@ -62,6 +62,7 @@ class Messages extends Component {
 
   constructor(props) {
     super(props);
+    console.log('PROPS MESSAGE: ', props);
     const usernameColors = {};
     if (props.group && props.group.users) {
       props.group.users.forEach((user) => {
@@ -70,12 +71,29 @@ class Messages extends Component {
     }
     this.state = {
       usernameColors,
+      currentUserName:'',
+
     };
   }
 
+  componentWillMount(){
+    const {auth}=this.props;
+    console.log('AUTHHHHH', auth);
+
+    this.setState({
+      currentUserName:auth.username
+    });
+
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { usernameColors } = this.state;
+    const { usernameColors, currentUserName } = this.state;
+    const { users } = this.props;
     const newUsernameColors = {};
+/*     console.log('USERCOLORS ', usernameColors);
+    console.log('USERS ', users, this.props); */
+    console.log('NEWCOLORZS', newUsernameColors)
+    console.log('CURRENTUSER', currentUserName)
     // check for new messages
     if (nextProps.group) {
       if (nextProps.group.users) {
@@ -149,11 +167,13 @@ class Messages extends Component {
 
   renderItem = ({ item: edge }) => {
     const { usernameColors } = this.state;
+    const { auth } = this.props;
+    
     const message = edge.node;
     return (
       <Message
         color={usernameColors[message.from.username]}
-        isCurrentUser={message.from.id === 1} // for now until we implement auth
+        isCurrentUser={message.from.id === auth.id} // for now until we implement auth
         message={message}
       />
     );

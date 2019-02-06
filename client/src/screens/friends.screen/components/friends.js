@@ -33,14 +33,12 @@ class Friends extends Component {
       state: { routeName },
     } = navigation;
 
-    console.log('THISPROPS INVITATION FROM ME', this.props);
-
     const route = friendRoutes[routeName];
     const routeActions = R.map(
       actionName => R.find(({ action }) => action === actionName, actions),
       route.actions,
     );
-    console.log('ROUTES', routeActions);
+
     return (
       <View style={styles.container}>
         <FlatList

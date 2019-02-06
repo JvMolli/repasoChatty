@@ -5,6 +5,7 @@ const CHANGE_USERNAME = gql`
     changeUserName(id: $id, username: $username) {
       id
       username
+      jwt
     }
   }
 `;

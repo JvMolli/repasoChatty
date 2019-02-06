@@ -112,11 +112,9 @@ class NewGroup extends Component {
   render() {
     const { user, loading } = this.props;
     const { selected, friends } = this.state;
-    console.log('PROPS', this.props);
-    console.log('USER >>>>>>>>>>>>>>>>', user);
+
     // render loading placeholder while we fetch messages
     if (loading || !user) {
-      console.log('POYASSSSSSSSS');
       return (
         <View style={[styles.loading, styles.container]}>
           <ActivityIndicator />

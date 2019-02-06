@@ -36,7 +36,7 @@ export const groupLogic = {};
 export const changeUserNameLogic = {
   async changeUserName(_, { id, username }, ctx) {
     const users = await getAuthenticatedUser(ctx).then(user => user.update({ username }));
-    console.log(users);
+
     return users;
   },
 };

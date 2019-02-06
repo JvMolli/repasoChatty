@@ -54,8 +54,18 @@ export const resolvers = {
       });
     },
     async changeUserName(_, args, ctx) {
-      return changeUserNameLogic.changeUserName(_, args, ctx).then(data => data);
-     },
+      const user = await changeUserNameLogic.changeUserName(_, args, ctx).then(data => data);
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        JWT_SECRET,
+      );
+      ctx.user = Promise.resolve(user);
+      user.jwt = token;
+      return user;
+    },
     async createGroup(
       _,
       {

@@ -61,6 +61,7 @@ export const typeDefs = gql`
     users: [User!]! # users in the group
     messages(messageConnection: ConnectionInput): MessageConnection # messages sent to the group
   }
+
   # a user -- keep type really simple for now
   type User {
     id: Int! # unique id for the user
@@ -104,7 +105,6 @@ export const typeDefs = gql`
     messages(groupId: Int, userId: Int): [Message]
     # Return a group by its id
     group(id: Int!): Group
-
     # Return friend invitations from and to an user
     friendInvitations(userId: Int!): [FriendInvitation]
     # me black list

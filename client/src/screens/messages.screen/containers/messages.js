@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { graphql, compose } from 'react-apollo';
 import { Buffer } from 'buffer';
-import { isBefore } from 'date-fns';
+import { isBefore, parseISO } from 'date-fns';
 
 import GROUP_QUERY from 'chatty/src/graphql/group.query';
 import CREATE_MESSAGE_MUTATION from 'chatty/src/graphql/create-message.mutation';
@@ -122,7 +122,7 @@ const createMessageMutation = graphql(CREATE_MESSAGE_MUTATION, {
         const updatedGroup = userData.user.groups.find(({ id }) => id === message.groupId);
         if (
           !updatedGroup.messages.edges.length
-            || isBefore(updatedGroup.messages.edges[0].node.createdAt, createMessage.createdAt)
+            || isBefore(parseISO(updatedGroup.messages.edges[0].node.createdAt), parseISO(createMessage.createdAt))
         ) {
           // update the latest message
           updatedGroup.messages.edges[0] = {

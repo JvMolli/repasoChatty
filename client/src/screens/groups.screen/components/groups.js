@@ -148,8 +148,7 @@ class Groups extends Component {
 
   render() {
     const { user, networkStatus } = this.props;
-    console.log('WSCLIENT', wsClient);
-    console.log('CLient', client.cache.data.store.getState());
+
     if (!user) {
       return null;
     }

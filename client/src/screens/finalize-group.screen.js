@@ -132,7 +132,7 @@ class FinalizeGroup extends Component {
     const { createGroup, navigation } = this.props;
     const { name, selected } = this.state;
     const { userId } = navigation.state.params;
-    
+
     createGroup({
       name,
       userId, // fake user for now
@@ -158,7 +158,7 @@ class FinalizeGroup extends Component {
     const { navigation } = this.props;
     const { selected } = this.state;
     const { friendCount, userId } = navigation.state.params;
-    console.log('USERID', userId);
+
     return (
       <View style={styles.container}>
         <View style={styles.detailsContainer}>

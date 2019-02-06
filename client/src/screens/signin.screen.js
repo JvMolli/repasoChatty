@@ -81,8 +81,8 @@ class Signin extends Component {
 
     this.state = {
       view: 'login',
-      email: 'Enrique5@hotmail.com',
-      password: 'Enrique5@hotmail.com',
+      email: 'Elwin_Towne@gmail.com',
+      password: 'Elwin_Towne@gmail.com',
     };
   }
 

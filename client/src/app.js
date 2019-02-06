@@ -32,7 +32,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, navigationMiddleware)),
 );
 
-console.log('STORE', store.getState());
 const cache = new ReduxCache({ store });
 const reduxLink = new ReduxLink(store);
 const errorLink = onError((errors) => {

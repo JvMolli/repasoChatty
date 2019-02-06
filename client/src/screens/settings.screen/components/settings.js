@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-
 import {
   StyleSheet, Text, View, Button, TextInput,
 } from 'react-native';
+import { setCurrentUser } from '../../../actions/auth.actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,16 +29,19 @@ class Settings extends Component {
     const {
       changeUserName,
       user: { id },
+      dispatch,
+      auth,
     } = this.props;
     const { username } = this.state;
 
-    changeUserName(id, username)
-      .then(data => console.log('DATADATDATA', data))
-      .catch(err => console.log('ERRRRRRRRR', err));
+    changeUserName(id, username).then((user) => {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>', user);
+
+      dispatch(setCurrentUser(user));
+    });
   };
 
   render() {
-    console.log('CHANGECHANGE', this.props);
     return (
       <View style={styles.container}>
         <TextInput
