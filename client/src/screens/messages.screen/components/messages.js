@@ -62,7 +62,6 @@ class Messages extends Component {
 
   constructor(props) {
     super(props);
-    console.log('PROPS MESSAGE: ', props);
     const usernameColors = {};
     if (props.group && props.group.users) {
       props.group.users.forEach((user) => {
@@ -78,7 +77,6 @@ class Messages extends Component {
 
   componentWillMount(){
     const {auth}=this.props;
-    console.log('AUTHHHHH', auth);
 
     this.setState({
       currentUserName:auth.username
@@ -90,10 +88,7 @@ class Messages extends Component {
     const { usernameColors, currentUserName } = this.state;
     const { users } = this.props;
     const newUsernameColors = {};
-/*     console.log('USERCOLORS ', usernameColors);
-    console.log('USERS ', users, this.props); */
-    console.log('NEWCOLORZS', newUsernameColors)
-    console.log('CURRENTUSER', currentUserName)
+
     // check for new messages
     if (nextProps.group) {
       if (nextProps.group.users) {

@@ -40,3 +40,10 @@ export const changeUserNameLogic = {
     return users;
   },
 };
+export const changeUserMailLogic = {
+  async changeUserMail(_, { id, email }, ctx) {
+    const users = await getAuthenticatedUser(ctx).then(user => user.update({ email }));
+
+    return users;
+  },
+};

@@ -8,7 +8,7 @@ import {
   BlackList, FriendInvitation, Group, Message, User,
 } from './connectors';
 import { pubsub } from '../subscriptions';
-import { messageLogic, changeUserNameLogic } from './logic';
+import { messageLogic, changeUserNameLogic,changeUserMailLogic } from './logic';
 
 import configurationManager from '../configurationManager';
 
@@ -55,6 +55,19 @@ export const resolvers = {
     },
     async changeUserName(_, args, ctx) {
       const user = await changeUserNameLogic.changeUserName(_, args, ctx).then(data => data);
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        JWT_SECRET,
+      );
+      ctx.user = Promise.resolve(user);
+      user.jwt = token;
+      return user;
+    },
+    async changeUserMail(_, args, ctx) {
+      const user = await changeUserMailLogic.changeUserMail(_, args, ctx).then(data => data);
       const token = jwt.sign(
         {
           id: user.id,

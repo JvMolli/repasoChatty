@@ -1,9 +1,10 @@
 import { graphql, compose } from 'react-apollo';
 import { USER_QUERY } from 'chatty/src/graphql/user.query';
-import { GROUP_QUERY } from 'chatty/src/graphql/group.query';
 import { connect } from 'react-redux';
 import { withLoading } from 'chatty/src/components/withLoading';
 import CHANGE_USERNAME from '../../../graphql/change-username.mutation';
+import CHANGE_USERMAIL from '../../../graphql/changeMail.mutation';
+
 import Settings from '../components/settings';
 
 const userQuery = graphql(USER_QUERY, {
@@ -18,14 +19,16 @@ const changeUserName = graphql(CHANGE_USERNAME, {
   props: ({ mutate }) => ({
     changeUserName: (id, username) => mutate({
       variables: { id, username },
-      refetchQueries: [
-        {
-          query: USER_QUERY,
-          variables: {
-            userId: id,
-          },
-        },
-      ],
+      refetchQueries: ['user', 'group'],
+    }),
+  }),
+});
+
+const changeUserMail = graphql(CHANGE_USERMAIL, {
+  props: ({ mutate }) => ({
+    changeUserMail: (id, email) => mutate({
+      variables: { id, email },
+      refetchQueries: ['user'],
     }),
   }),
 });
@@ -38,4 +41,5 @@ export default compose(
   withLoading,
   userQuery,
   changeUserName,
+  changeUserMail,
 )(Settings);

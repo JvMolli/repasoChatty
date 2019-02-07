@@ -22,33 +22,75 @@ class Settings extends Component {
     super(props);
     this.state = {
       username: '',
+      email: '',
     };
   }
 
-  changeName = () => {
+  componentDidMount() {
+    const { auth } = this.props;
+    this.setState({
+      username: auth.username,
+      email: auth.email,
+      oldUserName: auth.username,
+      oldUserMail: auth.email,
+    });
+  }
+
+  changeName = async () => {
     const {
       changeUserName,
       user: { id },
       dispatch,
-      auth,
     } = this.props;
     const { username } = this.state;
 
-    changeUserName(id, username).then((user) => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>', user);
+    await changeUserName(id, username).then(({ data: { changeUserName: user } }) => dispatch(setCurrentUser(user)));
+    this.setState({
+      oldUserName: username,
+    });
+  };
 
-      dispatch(setCurrentUser(user));
+  changeEmail = async () => {
+    const {
+      changeUserMail,
+      user: { id },
+      dispatch,
+    } = this.props;
+    const { email } = this.state;
+
+    await changeUserMail(id, email).then(({ data: { changeUserMail: user } }) => dispatch(setCurrentUser(user)));
+    this.setState({
+      oldUserMail: email,
     });
   };
 
   render() {
+    const { auth, user } = this.props;
+    const {
+      username, email, oldUserName, oldUserMail,
+    } = this.state;
+
+    // console.log("USER AUTH", user, auth);
     return (
       <View style={styles.container}>
-        <TextInput
-          onChangeText={text => this.setState({ username: text })}
-          placeholder="Type your message here!"
-        />
-        <Button onPress={this.changeName} title="ok" color="#841584" />
+        <View>
+          <TextInput
+            onChangeText={text => this.setState({ username: text })}
+            placeholder={oldUserName}
+          />
+          {username != auth.username ? (
+            <Button onPress={this.changeName} title="change" color="#841584" />
+          ) : null}
+        </View>
+        <View>
+          <TextInput
+            onChangeText={text => this.setState({ email: text })}
+            placeholder={oldUserMail}
+          />
+          {email != auth.email ? (
+            <Button onPress={this.changeEmail} title="changeMAIL" color="#841584" />
+          ) : null}
+        </View>
       </View>
     );
   }

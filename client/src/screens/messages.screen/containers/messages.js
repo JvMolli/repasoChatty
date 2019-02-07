@@ -94,7 +94,7 @@ const createMessageMutation = graphql(CREATE_MESSAGE_MUTATION, {
             messageConnection: { first: ITEMS_PER_PAGE },
           },
         });
-
+     
           // Add our message from the mutation to the end.
         groupData.group.messages.edges.unshift({
           __typename: 'MessageEdge',
@@ -110,13 +110,14 @@ const createMessageMutation = graphql(CREATE_MESSAGE_MUTATION, {
           },
           data: groupData,
         });
-
+        
         const userData = store.readQuery({
           query: USER_QUERY,
           variables: {
             id: ownProps.auth.id,
           },
         });
+
 
           // check whether the mutation is the latest message and update cache
         const updatedGroup = userData.user.groups.find(({ id }) => id === message.groupId);

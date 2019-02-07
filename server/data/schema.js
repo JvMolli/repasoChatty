@@ -114,6 +114,7 @@ export const typeDefs = gql`
     # send a message to a group
     createMessage(message: CreateMessageInput!): Message
     changeUserName(id: Int!, username: String!): User
+    changeUserMail(id: Int!, email: String!): User
     # group CRUD
     createGroup(group: CreateGroupInput!): Group
     deleteGroup(id: Int!): Group
