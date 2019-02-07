@@ -117,9 +117,9 @@ export const navigationReducer = (state = null, action) => {
       // convert persisted data to Immutable and confirm rehydration
       if (!action.payload || !action.payload.auth || !action.payload.auth.jwt) {
         const { routes, index } = state;
-        if (routes[index].routeName !== 'Signin') {
+        if (routes[index].routeName !== 'Auth') {
           nextState = AppNavigator.router.getStateForAction(
-            NavigationActions.navigate({ routeName: 'Signin' }),
+            NavigationActions.navigate({ routeName: 'Auth' }),
             state,
           );
         }
@@ -127,9 +127,9 @@ export const navigationReducer = (state = null, action) => {
       break;
     case LOGOUT:
       const { routes, index } = state;
-      if (routes[index].routeName !== 'Signin') {
+      if (routes[index].routeName !== 'Auth') {
         nextState = AppNavigator.router.getStateForAction(
-          NavigationActions.navigate({ routeName: 'Signin' }),
+          NavigationActions.navigate({ routeName: 'Auth' }),
           state,
         );
       }

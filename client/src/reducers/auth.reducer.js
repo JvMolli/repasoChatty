@@ -8,11 +8,18 @@ const initialState = {
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
-      return { ...state, ...action.user };
+      const c = { ...state, ...action.user };
+      console.log('>>>>>>>>>>>>>>>>>>>>>>', c);
+      return c;
     case LOGOUT:
       return { loading: false, ...action.user };
     case REHYDRATE:
-      return { ...action.payload.auth };
+      if (!action.payload || !action.payload.auth || !action.payload.auth.jwt) {
+        return { state };
+      } else {
+        return { ...action.payload.auth, loading: false }
+      }
+
     default:
       return state;
   }

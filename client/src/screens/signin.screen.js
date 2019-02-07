@@ -180,8 +180,8 @@ class Signin extends Component {
             <ActivityIndicator />
           </View>
         ) : (
-          undefined
-        )}
+            undefined
+          )}
         <View style={styles.inputContainer}>
           <TextInput
             defaultValue="Enrique5@hotmail.com"
@@ -201,7 +201,7 @@ class Signin extends Component {
           onPress={this[view]}
           style={styles.submit}
           title={view === 'signup' ? 'Sign up' : 'Login'}
-          // disabled={loading || !!jwt}
+        // disabled={loading || !!jwt}
         />
         <View style={styles.switchContainer}>
           <Text>{view === 'signup' ? 'Already have an account?' : 'New to Chatty?'}</Text>
