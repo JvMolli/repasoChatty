@@ -81,7 +81,7 @@ class Signin extends Component {
 
     this.state = {
       view: 'login',
-      email: 'GokuPepetter@gmail.com',
+      email: 'Elwin_Towne@gmail.com',
       password: 'Elwin_Towne@gmail.com',
     };
   }
@@ -90,6 +90,14 @@ class Signin extends Component {
     if (nextProps.auth.jwt) {
       nextProps.navigation.goBack();
     }
+  }
+
+  componentDidMount() {
+    const {
+      auth: { jwt },
+      navigation: { navigate },
+    } = this.props;
+    if (jwt) navigate('App');
   }
 
   login = () => {
@@ -163,7 +171,8 @@ class Signin extends Component {
   render() {
     const { view, loading } = this.state;
     const jwt = R.path(['auth', 'jwt'], this.props);
-
+    console.log(loading);
+    console.log(jwt);
     return (
       <KeyboardAvoidingView style={styles.container}>
         {loading ? (
@@ -192,7 +201,7 @@ class Signin extends Component {
           onPress={this[view]}
           style={styles.submit}
           title={view === 'signup' ? 'Sign up' : 'Login'}
-          disabled={loading || !!jwt}
+          // disabled={loading || !!jwt}
         />
         <View style={styles.switchContainer}>
           <Text>{view === 'signup' ? 'Already have an account?' : 'New to Chatty?'}</Text>

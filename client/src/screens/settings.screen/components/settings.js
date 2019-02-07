@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet, Text, View, Button, TextInput,
 } from 'react-native';
-import { setCurrentUser } from '../../../actions/auth.actions';
+import { setCurrentUser, logout } from '../../../actions/auth.actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -64,6 +64,15 @@ class Settings extends Component {
     });
   };
 
+  logout = () => {
+    const {
+      dispatch,
+      navigation: { navigate },
+    } = this.props;
+    dispatch(logout());
+    navigate('Auth');
+  };
+
   render() {
     const { auth, user } = this.props;
     const {
@@ -90,6 +99,9 @@ class Settings extends Component {
           {email != auth.email ? (
             <Button onPress={this.changeEmail} title="changeMAIL" color="#841584" />
           ) : null}
+        </View>
+        <View>
+          <Button onPress={this.logout} title="logout" color="red" />
         </View>
       </View>
     );

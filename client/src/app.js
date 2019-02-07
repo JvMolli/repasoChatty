@@ -15,6 +15,9 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import Config from 'react-native-config';
 import thunk from 'redux-thunk';
 import { setContext } from 'apollo-link-context';
+import { AsyncStorage } from 'react-native';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistStore, persistCombineReducers } from 'redux-persist';
 
 import AppWithNavigationState, { navigationReducer, navigationMiddleware } from './navigation';
 import auth from './reducers/auth.reducer';
@@ -22,8 +25,14 @@ import auth from './reducers/auth.reducer';
 const URL = `${Config.PROTOCOL || 'http'}://${Config.SERVER || 'localhost'}:${Config.PORT
   || '8080'}`;
 
+const config = {
+  key: 'root',
+  storage: AsyncStorage,
+  blacklist: ['nav', 'apollo'], // don't persist nav for now
+};
+
 const store = createStore(
-  combineReducers({
+  persistCombineReducers(config, {
     apollo: apolloReducer,
     nav: navigationReducer,
     auth,
@@ -89,10 +98,14 @@ export const client = new ApolloClient({
   cache,
 });
 
+const persistor = persistStore(store);
+
 const App = () => (
   <ApolloProvider client={client}>
     <Provider store={store}>
-      <AppWithNavigationState />
+      <PersistGate persistor={persistor}>
+        <AppWithNavigationState />
+      </PersistGate>
     </Provider>
   </ApolloProvider>
 );

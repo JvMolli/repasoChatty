@@ -15,7 +15,7 @@ import {
   BackHandler, Text, View, StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
-
+import { REHYDRATE } from 'redux-persist';
 import Groups from './screens/groups.screen';
 import Messages from './screens/messages.screen';
 import NewGroup from './screens/new-group.screen';
@@ -23,7 +23,7 @@ import FinalizeGroup from './screens/finalize-group.screen';
 import GroupDetails from './screens/group-details.screen';
 import SigninScreen from './screens/signin.screen';
 import Settings from './screens/settings.screen';
-
+import { LOGOUT } from './constants/constants';
 import { friendRoutes } from './screens/friends.screen';
 
 const styles = StyleSheet.create({
@@ -110,7 +110,35 @@ const initialState = AppNavigator.router.getStateForAction(
   }),
 );
 export const navigationReducer = (state = null, action) => {
-  const nextState = AppNavigator.router.getStateForAction(action, state);
+  let nextState = AppNavigator.router.getStateForAction(action, state);
+
+  switch (action.type) {
+    case REHYDRATE:
+      // convert persisted data to Immutable and confirm rehydration
+      if (!action.payload || !action.payload.auth || !action.payload.auth.jwt) {
+        const { routes, index } = state;
+        if (routes[index].routeName !== 'Signin') {
+          nextState = AppNavigator.router.getStateForAction(
+            NavigationActions.navigate({ routeName: 'Signin' }),
+            state,
+          );
+        }
+      }
+      break;
+    case LOGOUT:
+      const { routes, index } = state;
+      if (routes[index].routeName !== 'Signin') {
+        nextState = AppNavigator.router.getStateForAction(
+          NavigationActions.navigate({ routeName: 'Signin' }),
+          state,
+        );
+      }
+      break;
+    default:
+      nextState = AppNavigator.router.getStateForAction(action, state);
+      break;
+  }
+
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
 };
