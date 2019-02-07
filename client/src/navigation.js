@@ -112,33 +112,6 @@ const initialState = AppNavigator.router.getStateForAction(
 export const navigationReducer = (state = null, action) => {
   let nextState = AppNavigator.router.getStateForAction(action, state);
 
-  switch (action.type) {
-    case REHYDRATE:
-      // convert persisted data to Immutable and confirm rehydration
-      if (!action.payload || !action.payload.auth || !action.payload.auth.jwt) {
-        const { routes, index } = state;
-        if (routes[index].routeName !== 'Auth') {
-          nextState = AppNavigator.router.getStateForAction(
-            NavigationActions.navigate({ routeName: 'Auth' }),
-            state,
-          );
-        }
-      }
-      break;
-    case LOGOUT:
-      const { routes, index } = state;
-      if (routes[index].routeName !== 'Auth') {
-        nextState = AppNavigator.router.getStateForAction(
-          NavigationActions.navigate({ routeName: 'Auth' }),
-          state,
-        );
-      }
-      break;
-    default:
-      nextState = AppNavigator.router.getStateForAction(action, state);
-      break;
-  }
-
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
 };
