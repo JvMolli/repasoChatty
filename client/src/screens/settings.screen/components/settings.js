@@ -28,6 +28,7 @@ class Settings extends Component {
 
   componentDidMount() {
     const { auth } = this.props;
+
     this.setState({
       username: auth.username,
       email: auth.email,
@@ -86,6 +87,7 @@ class Settings extends Component {
           <TextInput
             onChangeText={text => this.setState({ username: text })}
             placeholder={oldUserName}
+            defaultValue={oldUserName}
           />
           {username != auth.username ? (
             <Button onPress={this.changeName} title="change" color="#841584" />
@@ -95,6 +97,7 @@ class Settings extends Component {
           <TextInput
             onChangeText={text => this.setState({ email: text })}
             placeholder={oldUserMail}
+            defaultValue={oldUserMail}
           />
           {email != auth.email ? (
             <Button onPress={this.changeEmail} title="changeMAIL" color="#841584" />

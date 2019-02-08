@@ -15,15 +15,14 @@ import {
   BackHandler, Text, View, StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { REHYDRATE } from 'redux-persist';
 import Groups from './screens/groups.screen';
 import Messages from './screens/messages.screen';
 import NewGroup from './screens/new-group.screen';
 import FinalizeGroup from './screens/finalize-group.screen';
 import GroupDetails from './screens/group-details.screen';
-import SigninScreen from './screens/signin.screen';
+// import SigninScreen from './screens/signin.screen';
+import Signin from './screens/signin.screen';
 import Settings from './screens/settings.screen';
-import { LOGOUT } from './constants/constants';
 import { friendRoutes } from './screens/friends.screen';
 
 const styles = StyleSheet.create({
@@ -90,7 +89,7 @@ const StackNavigator = createStackNavigator(
 
 const AppNavigator = createSwitchNavigator(
   {
-    Auth: SigninScreen,
+    Auth: Signin,
     App: StackNavigator,
   },
   {
@@ -110,7 +109,7 @@ const initialState = AppNavigator.router.getStateForAction(
   }),
 );
 export const navigationReducer = (state = null, action) => {
-  let nextState = AppNavigator.router.getStateForAction(action, state);
+  const nextState = AppNavigator.router.getStateForAction(action, state);
 
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
