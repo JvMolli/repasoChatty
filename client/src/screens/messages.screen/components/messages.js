@@ -42,12 +42,10 @@ const styles = StyleSheet.create({
 class Messages extends Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
-
     const goToGroupDetails = () => navigate('GroupDetails', {
       id: state.params.groupId,
       title: state.params.title,
     });
-
     return {
       headerTitle: (
         <TouchableOpacity style={styles.titleWrapper} onPress={goToGroupDetails}>
@@ -70,16 +68,17 @@ class Messages extends Component {
     }
     this.state = {
       usernameColors,
-      currentUserName:'',
+      currentUserName: '',
+      groupTitle: ""
 
     };
   }
 
-  componentWillMount(){
-    const {auth}=this.props;
+  componentWillMount() {
+    const { auth } = this.props;
 
     this.setState({
-      currentUserName:auth.username
+      currentUserName: auth.username
     });
 
   }
@@ -91,6 +90,14 @@ class Messages extends Component {
 
     // check for new messages
     if (nextProps.group) {
+      this.setState({
+        groupTitle: nextProps.group.name,
+      })
+
+      if (this.props.group.name !== nextProps.group.name) {
+        nextProps.navigation.setParams({ title: nextProps.group.name })
+      }
+
       if (nextProps.group.users) {
         // apply a color to each user
         nextProps.group.users.forEach((user) => {
@@ -163,7 +170,7 @@ class Messages extends Component {
   renderItem = ({ item: edge }) => {
     const { usernameColors } = this.state;
     const { auth } = this.props;
-    
+
     const message = edge.node;
     return (
       <Message
@@ -185,7 +192,7 @@ class Messages extends Component {
   };
 
   render() {
-    const { group } = this.props;
+    const { group, auth } = this.props;
 
     if (!group) {
       return null;

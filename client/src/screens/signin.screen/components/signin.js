@@ -145,28 +145,24 @@ class Signin extends Component {
   };
 
   changeUserName = (text) => {
-    console.log('holaaaaaa');
     this.setState({
       username: text,
     });
   };
 
   changeEmail = (text) => {
-    console.log('holaaaaaa');
     this.setState({
       email: text,
     });
   };
 
   changePassword = (text) => {
-    console.log('holaaaaaa');
     this.setState({
       password: text,
     });
   };
 
   changeRePassword = (text) => {
-    console.log('repass');
     this.setState({
       repassword: text,
     });
@@ -181,7 +177,6 @@ class Signin extends Component {
 
   render() {
     const { view, email } = this.state;
-    console.log('STADO', email);
     return (
       <KeyboardAvoidingView enabled style={styles.container}>
         <View style={styles.logo}>
@@ -196,14 +191,14 @@ class Signin extends Component {
                 login={this.login}
               />
             ) : (
-              <Signup
-                changeEmail={this.changeEmail}
-                changePassword={this.changePassword}
-                changeRePassword={this.changeRePassword}
-                changeUserName={this.changeUserName}
-                signup={this.signup}
-              />
-            )}
+                <Signup
+                  changeEmail={this.changeEmail}
+                  changePassword={this.changePassword}
+                  changeRePassword={this.changeRePassword}
+                  changeUserName={this.changeUserName}
+                  signup={this.signup}
+                />
+              )}
           </View>
           <View>
             <TouchableOpacity onPress={this.changeView}>

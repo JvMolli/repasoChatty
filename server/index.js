@@ -43,7 +43,6 @@ const startServer = async () => {
     },
   });
   const { url } = await server.listen({ port });
-  // console.log('>>>>>>>>>>>>>>>>>>>>>>>', server.listen());
   console.log(`🚀 Server ready at ${url}`);
 };
 

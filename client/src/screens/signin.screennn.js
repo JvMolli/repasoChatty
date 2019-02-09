@@ -171,8 +171,7 @@ class Signin extends Component {
   render() {
     const { view, loading } = this.state;
     const jwt = R.path(['auth', 'jwt'], this.props);
-    console.log(loading);
-    console.log(jwt);
+
     return (
       <KeyboardAvoidingView style={styles.container}>
         {loading ? (

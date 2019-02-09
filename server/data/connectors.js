@@ -6,6 +6,7 @@ const db = new Sequelize(...configurationManager.db);
 // define groups
 const GroupModel = db.define('group', {
   name: { type: Sequelize.STRING },
+  admin: { type: Sequelize.INTEGER },
 });
 // define messages
 const MessageModel = db.define('message', {

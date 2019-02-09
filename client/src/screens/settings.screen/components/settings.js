@@ -80,7 +80,6 @@ class Settings extends Component {
       username, email, oldUserName, oldUserMail,
     } = this.state;
 
-    // console.log("USER AUTH", user, auth);
     return (
       <View style={styles.container}>
         <View>

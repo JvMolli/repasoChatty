@@ -58,6 +58,7 @@ export const typeDefs = gql`
   type Group {
     id: Int! # unique id for the group
     name: String # name of the group
+    admin: Int
     users: [User!]! # users in the group
     messages(messageConnection: ConnectionInput): MessageConnection # messages sent to the group
   }

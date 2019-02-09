@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 });
 
 const Login = (args) => {
-  console.log(args);
   return (
     <KeyboardAvoidingView style={styles.inputContainer}>
       <TextInput

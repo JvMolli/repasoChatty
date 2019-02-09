@@ -8,7 +8,7 @@ import {
   BlackList, FriendInvitation, Group, Message, User,
 } from './connectors';
 import { pubsub } from '../subscriptions';
-import { messageLogic, changeUserNameLogic,changeUserMailLogic } from './logic';
+import { messageLogic, changeUserNameLogic, changeUserMailLogic, groupLogic } from './logic';
 
 import configurationManager from '../configurationManager';
 
@@ -91,6 +91,7 @@ export const resolvers = {
       });
       const group = await Group.create({
         name,
+        admin: userId,
         users: [user, ...friends],
       });
       await group.addUsers([user, ...friends]);
@@ -122,10 +123,10 @@ export const resolvers = {
     updateGroup(
       _,
       {
-        group: { id, name },
-      },
+        group
+      }, ctx
     ) {
-      return Group.findOne({ where: { id } }).then(group => group.update({ name }));
+      return groupLogic.updateGroup(_, { group }, ctx).then(group => group);
     },
     async createFriendInvitation(
       _,
@@ -272,8 +273,8 @@ export const resolvers = {
         () => pubsub.asyncIterator(MESSAGE_ADDED_TOPIC),
         (payload, args) => Boolean(
           args.groupIds
-              && ~args.groupIds.indexOf(payload.messageAdded.groupId)
-              && args.userId !== payload.messageAdded.userId, // don't send to user creating message
+          && ~args.groupIds.indexOf(payload.messageAdded.groupId)
+          && args.userId !== payload.messageAdded.userId, // don't send to user creating message
         ),
       ),
     },
@@ -282,8 +283,8 @@ export const resolvers = {
         () => pubsub.asyncIterator(GROUP_ADDED_TOPIC),
         (payload, args) => Boolean(
           args.userId
-              && ~R.pluck('id', payload.groupAdded.users).indexOf(args.userId)
-              && args.userId !== payload.groupAdded.users[0].id, // don't send to user creating group
+          && ~R.pluck('id', payload.groupAdded.users).indexOf(args.userId)
+          && args.userId !== payload.groupAdded.users[0].id, // don't send to user creating group
         ),
       ),
     },

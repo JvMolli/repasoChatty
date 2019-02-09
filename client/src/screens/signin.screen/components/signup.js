@@ -66,7 +66,6 @@ class Signup extends Component {
     const {
       changeEmail, changeUserName, changePassword, changeRePassword, signup,
     } = this.props;
-    console.log(this.props);
     return (
       <View>
         <TextInput

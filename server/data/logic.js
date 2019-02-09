@@ -31,7 +31,15 @@ export const messageLogic = {
   },
 };
 // user => user.findAll({ where: { id } }).then(res => console.log(res))
-export const groupLogic = {};
+export const groupLogic = {
+  async updateGroup(_, { group: { id, name } }, ctx) {
+    const group = await getAuthenticatedUser(ctx).then(user => user.getGroups({ where: { id } }).then(group => {
+      if (group[0].admin === user.id) return group[0].update({ name })
+      throw new ForbiddenError('Unauthorized');
+    }));
+    return group;
+  }
+};
 
 export const changeUserNameLogic = {
   async changeUserName(_, { id, username }, ctx) {
